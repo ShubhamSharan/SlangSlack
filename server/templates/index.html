@@ -9,7 +9,8 @@
 		<title>Slang Slack</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="static/assets/css/main.css" />
+		<script src="http://code.responsivevoice.org/responsivevoice.js"></script>
 	</head>
 	<body class="is-preload">
 
@@ -22,8 +23,14 @@
 		<!-- Signup Form -->
 			<form id="signup-form" method="post" action="#">
 				<input type="text" name="search" placeholder="Search..">
-				<input type="submit" value="Search" />
+				<input onclick="speak()" type="submit" value="Search" />
 			</form>
+			<script>
+				function speak(){
+					responsiveVoice.speak("Now Playing");
+				}
+			</script>
+			
 
 		<!-- Footer -->
 			<footer id="footer">
@@ -39,7 +46,7 @@
 			</footer>
 
 		<!-- Scripts -->
-			<script src="assets/js/main.js"></script>
+			<script src="static/assets/js/main.js"></script>
 
 	<script type="text/javascript" src="app.bundle.js"></script><script type="text/javascript" src="app.bundle.js"></script></body>
 </html>

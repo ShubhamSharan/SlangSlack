@@ -10,6 +10,7 @@ app.listen(port, () => {
   console.log(`http://localhost:8080`);
 
 });
+app.use(express.static(path.join(__dirname ,'static')))
 app.use(express.static(path.join(__dirname ,'assets')))
 app.use(express.static(path.join(__dirname ,'images')))
 
