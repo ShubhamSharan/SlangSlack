@@ -1,3 +1,4 @@
+import path from 'path';
 import { RequestHandlerService } from './services/RequestHandlerService';
 
 const express = require('express');
@@ -13,8 +14,8 @@ router.get('/*', (req, res, next) => {
  */
 
 router.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-  //res.send("Hello World");
+  console.log("Should hit ");
+  res.sendFile(path.join(__dirname,'index.html'))
 });
 
 module.exports = router;
