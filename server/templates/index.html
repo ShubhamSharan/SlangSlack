@@ -1,9 +1,5 @@
 <!DOCTYPE HTML>
-<!--
-	Eventually by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+
 <html>
 	<head>
 		<title>Slang Slack</title>
@@ -11,6 +7,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="static/assets/css/main.css" />
 		<script src="http://code.responsivevoice.org/responsivevoice.js"></script>
+		<script src="https://genius.codes"></script>
+
 	</head>
 	<body class="is-preload">
 
@@ -21,15 +19,17 @@
 			</header>
 
 		<!-- Signup Form -->
-			<form id="signup-form" method="post" action="#">
-				<input type="text" name="search" placeholder="Search..">
-				<input onclick="speak()" type="submit" value="Search" />
+			<form id="signup-form" method="post" action="/songs">
+				<input type="text" name="search-bar" placeholder="Search..">
+				<input name='search-button' onclick="speak();" type="submit" value="search" />
 			</form>
 			<script>
 				function speak(){
 					responsiveVoice.speak("Now Playing");
+					document.getElementById("signup-form").submit();
 				}
 			</script>
+
 			
 
 		<!-- Footer -->

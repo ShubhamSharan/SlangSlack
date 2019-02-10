@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Slang Slack</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="http://code.responsivevoice.org/responsivevoice.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+  <link rel="stylesheet" href="static/assets/css/main.css" />
+
+</head>
+<body>
+<style>
+#crisp {
+  display: table;
+  width: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), url("https://flipwallpapers.com/wallpapers/funky-retro-wallpapers-picture-For-desktop-Wallpaper.jpg");
+  background-position: center;
+  height: 350px;
+  color: white;
+}    
+</style>
+<div id ="crisp" class="jumbotron text-center">
+  <h1>Slang Slack</h1>
+  <p>See how the music changes!</p> 
+</div>
+  
+<div class="container" onload="init()">
+  <div class="row">
+    <div class="col-sm-6">
+      <h3>Orginal</h3>
+      <textarea id="normal" rows="12%" cols="50">
+            {{lyrics}}
+      </textarea>
+      <br />
+      <button type="button" onclick="speak1();">Click Me!</button>
+      <button type="button" onclick="responsiveVoice.pause();"><i class="fa fa-pause"></i></button>
+      <button type="button" onclick="responsiveVoice.resume();"><i class="fa fa-play"></i></button>
+    </div>
+    <div class="col-sm-6">
+      <h3>The Cooler Version</h3>   
+      <textarea id="cooler" rows="12%" cols="50">
+        At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies. 
+      </textarea>
+      <br />
+      <button type="button" onclick="speak2();">Click Me!</button>
+      <button type="button" onclick="responsiveVoice.pause();"><i class="fa fa-pause"></i></button>
+      <button type="button" onclick="responsiveVoice.resume();"><i class="fa fa-play"></i></button>
+    </div>
+  </div>
+</div>
+<script>
+    function speak1(){
+        responsiveVoice.speak(document.getElementById("normal").value, "UK English Female",{rate: 1.25});
+    }
+    function speak2(){
+        responsiveVoice.speak(document.getElementById("cooler").value,"UK English Female", {rate: 1.25});
+    }
+</script>
+
+
+
+</body>
+</html>
