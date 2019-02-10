@@ -1,16 +1,11 @@
 from flask import Flask, render_template, request, url_for,redirect, session
 import pandas as pd
 import os
-
+from get_lyrics import get_lyrics
+from process_lyrics import substitute_words
 
 app = Flask(__name__)
 app.secret_key = os.urandom(16)
-
-def get_lyrics(song_title):
-    pd.set_option('display.max_colwidth', -1)
-    song_title = song_title.lower()
-    file = pd.read_csv("/Users/shubhamsharan09/Downloads/songdata.csv") 
-    return(file[file["song"].str.lower() == song_title]["text"])
 
 @app.route('/',methods = ['POST', 'GET'])
 def index():
@@ -25,8 +20,12 @@ def index():
 @app.route('/songs', methods=['POST'])
 def songs():
     #words = get_lyrics("billie jean")
-    song_title = get_lyrics(request.form["search-bar"])
-    return render_template('songs.html',lyrics=song_title)
+    song_original_lyrics = get_lyrics(request.form["search-bar"])
+    song_new_lyrics = substitute_words(request.form["search-bar"])
+    return render_template('songs.html',
+            old_lyrics=song_original_lyrics,
+            new_lyrics=song_new_lyrics, 
+            song_title=request.form["search-bar"])
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
