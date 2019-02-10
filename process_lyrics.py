@@ -10,29 +10,31 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import re 
 import requests 
+import time
 import json
+from google_sentiment_analysis import get_sentiment
 
-def get_urb_dic_defn(word:str) -> str: 
+def get_urb_dic_defn(word:str) -> list: 
+    '''
+    Gets the definition as a list of words appended as a bracket
+    The words will be those that are highlighted in blue or surrounded as 
+    square brackets
+    '''
+    
     get_definition = json.loads(requests.get("http://api.urbandictionary.com/v0/define?term=%s"%(word)).text)["list"]
+    length_get_definition = len(get_definition)
+    key_words = []
     
-    # Get the thumbs_up/thumbs_down ratio
-    thumbs_ratio = 0
-    # Keep the index of the highest ratio
-    index = 0
-    
-    for i in range(len(get_definition)): 
-        
-        thumbs_up = get_definition[i]["thumbs_up"]
-        thumbs_down = get_definition[i]["thumbs_down"] 
-        
-        if (thumbs_down <= 0):
-            thumbs_down = 1        
-        
-        if thumbs_up/thumbs_down > thumbs_ratio: 
-            thumbs_ratio = thumbs_up/thumbs_down
-            index = i
+    for i in range(length_get_definition):
+        indiv_defn = get_definition[i]["definition"]
+        indiv_defn = re.findall(r"\[\w*\s*\w*\]",indiv_defn)
 
-    return(get_definition[index])
+        
+        for term in indiv_defn: 
+            term = re.sub(r"[\[\]]","",term.lower())
+            key_words.append(term)
+    
+    return(key_words[0])
 
 
 # An example of an input
@@ -143,7 +145,7 @@ def preprocess_lyrics(lyrics:list) -> list:
     lyrics = re.sub(r"[\(\),.?!]","",lyrics)
     lyrics = word_tokenize(lyrics)
     # Convert all the n't to not 
-    word_replace_dict = {"n't":"not","'m":"am,","til":"until","'":"","'em":"them",'"':"",'``':"",'""':"","''":""}
+    word_replace_dict = {"n't":"not","'m":"am,","til":"until","'":"","'em":"them",'"':"",'``':"",'""':"","''":"","’":""}
     lyrics = list(map(lambda word: word_replace_dict[word] if word in word_replace_dict.keys() else word,lyrics))
     lyrics = [word for word in lyrics if word not in eng_stopwords]
     # remove empty elements
@@ -164,9 +166,63 @@ def n_grams(lyrics_list:list,n:int) -> list:
 
 #lyric = preprocess_lyrics(lyrics=lyrics)
 #trigram = n_grams(lyric,3)
-defn = get_urb_dic_defn("boobs")
-print(defn)
+
+'''
+Too many api calls
+def word_converter(word:str) -> str: 
+    # Here we don't consider any synsets and just consider the overall polarity
+    word_sentiment_score = get_sentiment(word)
+    # Get our "synsets"
+    word_list = get_urb_dic_defn(word)
+    # get the sentiment scores (polarity) of each word
+    #word_sentiment_list = list(map(lambda word_2_sentiment: get_sentiment(word_2_sentiment),word_list))
+    #word_sentiment_list = [get_sentiment(word_2_sentiment) for word_2_sentiment in word_list]
+    #word_sentiment_list = list(map(lambda word_score: abs(word_score - word_sentiment_score),word_sentiment_list))
+    #word_sentiment_list = [abs(word_score - word_sentiment_score) for word_score in word_sentiment_list]
+    word_sentiment_list = [abs(get_sentiment(word_2_sentiment)-word_sentiment_score) for word_2_sentiment in word_list]
+    print(word_sentiment_list)
+    #word_min_sent = min(list(map(lambda word_score: abs(word_score - word_sentiment_score),word_sentiment_list)))
+    word_min_sent  = min(word_sentiment_list)
+    word_sentiment_list_index = word_sentiment_list.index(word_min_sent)
+    word_list = word_list[word_sentiment_list_index]
+
+    # Returns the first occurrence of the min difference between the "synset" and the inputted word
+    return(word_list)
+'''
+
+# make a dictionary of word to slang (assume slang are any definitions of urban dictionary)
+# We'll take the first definition
+def word_to_dict(lyrics:str) -> dict: 
+
+    preprocessed_lyrics_set = set(preprocess_lyrics(lyrics))  
+
+    # Build a dictionary from the set 
+
+    translation_dict = {} 
+
+    for word in preprocessed_lyrics_set: 
+        translation_dict[word] = get_urb_dic_defn(word)
+        time.sleep(1)
     
-    
-    
+    #print(translation_dict)
+    return(translation_dict) 
+
+'''
+s = set(preprocess_lyrics(lyrics))  
+print(s)
+f = word_converter('fuck')
+print(f) 
+'''
+d = word_to_dict(lyrics)
+
+
+def substitute_words(lyrics:str,word_dict:dict) -> str:
+    dict_substitution = word_to_dict(lyrics)
+
+    lyrics = word_tokenize(lyrics) 
+    lyrics = [dict_substitution[word] for word in lyrics if word in dict_substitution.keys()] 
+
+    return(" ".join(lyrics))
+
+print(substitute_words(lyrics,d))
 

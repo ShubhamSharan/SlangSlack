@@ -123,6 +123,7 @@ def get_sentiment(text:str) -> tuple:
 
     document = types.Document(
         content=text,
+        language='en',
         type=enums.Document.Type.PLAIN_TEXT)
 
     # Detects the sentiment of the text
@@ -130,6 +131,12 @@ def get_sentiment(text:str) -> tuple:
 
     #sentiment.score -> positive and negative polarity 
     #sentiment.magnitude -> amount of emotion i.e. how emotional is it
-    #print('Text: {}'.format(text))
-    #print('Sentiment: {}, {}'.format(sentiment.score, sentiment.magnitude))
-    return(sentiment.score,sentiment.magnitude)
+    return(sentiment.score)
+    #return(sentiment.score,sentiment.magnitude)
+'''
+print(get_sentiment("fuck"))
+print(get_sentiment("dope"))
+print(get_sentiment("holla"))
+print(get_sentiment("dawg"))
+print(get_sentiment("holla at me"))
+'''
