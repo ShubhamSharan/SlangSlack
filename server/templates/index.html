@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Slang Slack</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  <script src="http://code.responsivevoice.org/responsivevoice.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="static/assets/css/main.css" />
+<!DOCTYPE HTML>
 
 <html>
 	<head>
@@ -21,39 +10,8 @@
 		<script src="https://genius.codes"></script>
 		<link rel="stylesheet" href="animate.min.css">
 
-<div class="container" onload="init()">
-  <h2>Results for: {{song_title}}</h2>
-  <div class="row">
-    <div class="col-sm-6">
-      <h3>Original</h3>
-      <textarea id="normal" rows="12%" cols="50">
-            {{old_lyrics}}
-      </textarea>
-      <br />
-      <button type="button" onclick="speak1();">Click Me!</button>
-      <button type="button" onclick="responsiveVoice.pause();"><i class="fa fa-pause"></i></button>
-      <button type="button" onclick="responsiveVoice.resume();"><i class="fa fa-play"></i></button>
-    </div>
-    <div class="col-sm-6">
-      <h3>The Cooler Version</h3>
-      <textarea id="cooler" rows="12%" cols="50">
-        {{new_lyrics}}
-      </textarea>
-      <br />
-      <button type="button" onclick="speak2();">Click Me!</button>
-      <button type="button" onclick="responsiveVoice.pause();"><i class="fa fa-pause"></i></button>
-      <button type="button" onclick="responsiveVoice.resume();"><i class="fa fa-play"></i></button>
-    </div>
-  </div>
-</div>
-<script>
-    function speak1(){
-        responsiveVoice.speak(document.getElementById("normal").value, "UK English Female",{rate: 1.25});
-    }
-    function speak2(){
-        responsiveVoice.speak(document.getElementById("cooler").value,"UK English Female", {rate: 1.25});
-    }
-</script>
+	</head>
+	<body class="is-preload">
 
 		<!-- Header -->
 			<header id="header">
@@ -61,6 +19,35 @@
 				<p>We take the music and allow you to see and play around with the slang with <a href="http://html5up.net">Slang Slack</a>.</p>
 			</header>
 
+		<!-- Signup Form -->
+			<form id="signup-form" method="post" action="/songs">
+				<input type="text" name="search-bar" placeholder="Search..">
+				<input name='search-button' onclick="speak();" type="submit" value="search" />
+			</form>
+			<script>
+				function speak(){
+					responsiveVoice.speak("Now Playing");
+					document.getElementById("signup-form").submit();
+				}
+			</script>
 
-</body>
+			
+
+		<!-- Footer -->
+			<footer id="footer">
+				<ul class="icons">
+					<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+					<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+					<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+					<li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+				</ul>
+				<ul class="copyright">
+					<li>&copy; Slang Slack.</li>
+				</ul>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="static/assets/js/main.js"></script>
+
+	<script type="text/javascript" src="app.bundle.js"></script><script type="text/javascript" src="app.bundle.js"></script></body>
 </html>

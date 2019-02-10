@@ -3,7 +3,7 @@
   "description": "shopify 2019 dev challenges",
   "main": "index.js",
   "scripts": {
-    "start": "webpack && node build/app.bundle.js"
+    "start": "python server/server.py"
   },
   "keywords": [
     "nodejs",
