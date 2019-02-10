@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, url_for,redirect, session
 import pandas as pd
 import os
 from get_lyrics import get_lyrics
-from process_lyrics import substitute_words
+from process_lyrics import substitute_words, read_lyrics
 
 app = Flask(__name__)
 app.secret_key = os.urandom(16)
@@ -21,7 +21,7 @@ def index():
 def songs():
     #words = get_lyrics("billie jean")
     song_original_lyrics = get_lyrics(request.form["search-bar"])
-    song_new_lyrics = substitute_words(request.form["search-bar"])
+    song_new_lyrics = read_lyrics(request.form["search-bar"])
     return render_template('songs.html',
             old_lyrics=song_original_lyrics,
             new_lyrics=song_new_lyrics, 

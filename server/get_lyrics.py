@@ -15,9 +15,3 @@ def get_lyrics(song_title):
     file = pd.read_csv("songdata.csv") 
     file = file[file["song"].str.lower() == song_title]["text"].values[0]
     return(file)
-
-#song_1 = get_lyrics("Billie Jean")
-#print(song_1)
-file = pd.read_csv("songdata.csv") 
-
-print(file)

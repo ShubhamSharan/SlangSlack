@@ -36,6 +36,9 @@ def get_urb_dic_defn(word:str) -> list:
             term = re.sub(r"[\[\]]","",term.lower())
             key_words.append(term)
     
+    if len(key_words) == 0: 
+        key_words.append(word)
+        
     return(key_words[0])
 
 
@@ -225,16 +228,14 @@ def substitute_words(lyrics:str) -> str:
     return(" ".join(lyrics))
 
 #print(substitute_words(lyrics,d))
-'''
+"""
 song_1 = substitute_words(get_lyrics("Billie Jean"))
 song_2 = substitute_words(get_lyrics("Sorry"))
 song_3 = substitute_words(get_lyrics("Shut Up and Drive"))
 song_4 = substitute_words(get_lyrics("Sicko Mode"))
 song_5 = substitute_words(get_lyrics("Sunflower"))
-'''
-song_1 = get_lyrics("Billie Jean")
-print(song_1)
-'''
+
+
 song_dict = {"billie jean":song_1,"sorry":song_2,"shut up and drive":song_3,"sicko mode":song_4,"sunflower":song_5}
 
 file_out = open("lyrics.plk","wb")
@@ -244,4 +245,11 @@ file_out.close()
 file_open = open("lyrics.plk","rb")
 file_dict = pickle.load(file_open)
 print(file_dict)
-'''
+"""
+
+def read_lyrics(song_title): 
+    file_open = open("lyrics.plk","rb")
+    file_dict = pickle.load(file_open)
+    file_open.close()
+    
+    return(file_dict[song_title])
